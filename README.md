@@ -1,6 +1,22 @@
 # helm-skillcred-SC104
 Preparing for [Developing Helm Charts (SC104)](https://training.linuxfoundation.org/skillcred/helm/) - a credential by LinuxFoundation
 
+### Basic commands
+#### Getting release info
+```bash
+helm get all
+
+helm get manifest
+
+helm get notes
+
+helm get values
+
+helm get hooks
+```
+
+---
+
 ### Testing helm charts
 #### Templating and validating
 - Charts can be tested with client-side rendering via `helm template` command
