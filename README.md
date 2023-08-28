@@ -12,8 +12,40 @@ helm get notes
 
 helm get values
 
+# Get all values used by a release (Including defaults)
+helm get values --all
+
 helm get hooks
 ```
+
+#### Getting chart related info
+```bash
+helm show all # Show all chart information
+
+helm show chart # Display Chart definition
+
+helm show readme 
+
+helm show values
+```
+
+---
+
+### [Create charts using basic templating](https://helm.sh/docs/helm/helm_create/)
+
+```bash
+helm create <chart-name>
+```
+
+#### Chart dependencies 
+In the dependencies map in `Chart.yaml` many fields are supported
+- The mandatory ones are **name, repository and version**
+- `condition`: Boolean value that determines whether the dependency should be included or not 
+- `Tags`: A list of Boolean values that determine whether the chart should be included or not
+- `import-values`: Mapping of source values to parent values
+- `Alias`: alternative name given to the dependency
+
+#### Basic Templating
 
 ---
 
