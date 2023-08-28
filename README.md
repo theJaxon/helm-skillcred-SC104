@@ -85,6 +85,25 @@ helm upgrade --install jaxon . --set tags.backend=false --set tags.cache=true
 - Both conditions and tags can be combined, however conditions **always overrides** tags
 
 #### Basic Templating
+##### Objects
+###### 1. Release object
+- Used to get `helm release` metadata
+- `.Release.Name` and `.Release.Namespace` are commonly used
+- `.Release.IsUpgrade` and `.Release.IsInstall` The first boolean is for whehter there's an upgrade or rollback, the second one is for installation
+
+##### Control Structure
+###### If/Else
+- Conditional blocks for resource creation
+```yaml
+{{- if .Values.configmap.enabled  }}
+data:
+{{- $configmap := printf "configs/%s/%s/config.yaml" .Values.name .Release.Namespace }}
+{{ (.Files.Glob $configmap ).AsConfig | indent 2 }}
+{{- end }}
+```
+
+###### with
+- Modifies the scope of the resources being generated
 
 ---
 
