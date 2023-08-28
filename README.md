@@ -43,7 +43,46 @@ In the dependencies map in `Chart.yaml` many fields are supported
 - `condition`: Boolean value that determines whether the dependency should be included or not 
 - `Tags`: A list of Boolean values that determine whether the chart should be included or not
 - `import-values`: Mapping of source values to parent values
-- `Alias`: alternative name given to the dependency
+- `Alias`: alternative name given to the dependency (Used when working with multiple versions of same dependency)
+
+```yaml
+# Conditionally install redis dependency
+dependencies:
+  - name: redis
+    repository: https://charts.bitnami.com/bitnami
+    version: 18.0.0
+    condition: redis.enabled
+
+# By default if not specified in values, the condition will be ignored meaning dependency will be installed anyway unless explicitly specified as false
+helm install . --generate-name # redis dependency is included 
+
+# Here redis dependency won't be installed
+helm upgrade <release-name> <chart-location> --set redis.enabled=false
+```
+
+```yaml
+dependencies:
+  - name: mariadb
+    repository: https://charts.bitnami.com/bitnami
+    version: 13.1.1
+    tags:
+      - backend
+      - database
+  - name: redis
+    repository: https://charts.bitnami.com/bitnami
+    version: 18.0.0
+    tags:
+      - backend
+      - cache
+
+# Both dependencies will be installed
+helm upgrade --install jaxon .
+
+# backend tag is disabled so that all dependencies aren't installed
+# Then only redis is picked for installation by enabling the cache tag
+helm upgrade --install jaxon . --set tags.backend=false --set tags.cache=true
+```
+- Both conditions and tags can be combined, however conditions **always overrides** tags
 
 #### Basic Templating
 
