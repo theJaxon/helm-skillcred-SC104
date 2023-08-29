@@ -132,6 +132,15 @@ exam: {{ .exam }}
 
 ---
 
+### [Use chart hooks](https://helm.sh/docs/topics/charts_hooks/)
+- Allow chart developers to intervene at certain points in a release's life cycle
+- For each of (install, delete, upgrade and rollback) there's `pre` and `post` hook
+- There's also a `test` hook that executes when `helm test` command is invoked
+- `helm.sh/weight` annotation can be used when a specific hook type exists multiple times and we need to prioritize one over the other
+- Multiple hooks can be specified using a comma separated list `helm.sh/hook: pre-rollback,post-rollback`
+
+---
+
 ### Testing helm charts
 #### Templating and validating
 - Charts can be tested with client-side rendering via `helm template` command
