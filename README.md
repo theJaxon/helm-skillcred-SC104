@@ -84,6 +84,8 @@ helm upgrade --install jaxon . --set tags.backend=false --set tags.cache=true
 ```
 - Both conditions and tags can be combined, however conditions **always overrides** tags
 
+---
+
 #### Basic Templating
 ##### Objects
 ###### 1. Release object
@@ -104,6 +106,29 @@ data:
 
 ###### with
 - Modifies the scope of the resources being generated
+
+```yaml
+{{- with .Values.jaxon }}
+  username: {{ .username }}
+  password: {{ .password }}
+{{- end }}
+```
+
+###### range
+- Used for iterating over list of items and also changes the scope just like with
+
+```yaml
+rhel:
+  - name: RHCSA
+    exam: EX200
+  - name: RHCE
+    exam: EX294
+
+{{- range .Values.rhel }}
+name: {{ .name }}
+exam: {{ .exam }}
+{{- end }}
+```
 
 ---
 
